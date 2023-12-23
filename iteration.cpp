@@ -86,16 +86,43 @@ IterativeResult solveSimpleIteration(const MatrixXd& A, const VectorXd& b, int m
 }
 
 int main() {
-    // Example usage
-    MatrixXd A(3, 3);
-    VectorXd b(3);
+    // MatrixXd A(3, 3);
+    // VectorXd b(3);
 
-    // Set up a system of linear equations
-    A << 4, -1, 0,
-         -1, 4, -1,
-         0, -1, 4;
+    // A << 4, -1, 0,
+    //      -1, 4, -1,
+    //      0, -1, 4;
 
-    b << 15, 10, 10;
+    // b << 15, 10, 10;
+
+
+
+    // MatrixXd A(4, 4);
+    // VectorXd b(4);
+
+    // A << 10, -1, 2, 0,
+    //      -1, 11, -1, 3,
+    //      2, -1, 10, -1,
+    //      0, 3, -1, 8;
+
+    // b << 6, 25, -11, 15;
+
+
+
+    // MatrixXd A(5, 5);
+    // VectorXd b(5);
+    // A <<  15.051416,  36.724761,   0.000000,   0.000000, 0,
+    //  -39.989346, -15.250037,  60.318093,   0.000000, 0, 
+    //    0.000000,  51.653012, -27.268850,  -8.840138, 0, 
+    //    0.000000,   0.000000,  95.980779, -25.703326,  4.916857,
+    //    0.000000,   0.000000,   0.000000, -41.079690, -77.541046;
+    // b << 1575.253205,
+    //     -2471.455608,
+    //     1826.517905,
+    //     -4435.410488,
+    //     3633.564584;
+
+
 
     // Solve the system using custom Gauss-Seidel method
     VectorXd zeidelSolution = solveGaussSeidel(A, b, 1000, 1e-6);

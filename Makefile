@@ -4,6 +4,9 @@ all:
 tri:
 	g++ -o tri tridiagonal.cpp && ./tri
 	rm tri
-zeidel:
+iteration:
 	g++ -o iteration iteration.cpp && ./iteration
 	rm iteration
+eigen:
+	g++ -o eigen eigen.cpp && ./eigen
+	rm eigen

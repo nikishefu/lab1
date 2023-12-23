@@ -55,6 +55,7 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "typeinfo": "cpp",
-        "iterativelinearsolvers": "cpp"
+        "iterativelinearsolvers": "cpp",
+        "dense": "cpp"
     }
 }
