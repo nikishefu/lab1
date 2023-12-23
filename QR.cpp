@@ -46,7 +46,7 @@ VectorXd inverse_iteration(const MatrixXd& A, double target_eigenvalue) {
     VectorXd b = VectorXd::Random(n); // Initial guess for eigenvector
     double lambda = 0.0;
 
-    for (int i = 0; i < 50; ++i) { // You can adjust the number of iterations
+    for (int i = 0; i < 50; ++i) {
         VectorXd x = (A - target_eigenvalue * I).fullPivLu().solve(b);
         b = x / x.norm();
         lambda = b.dot(A * b) / b.dot(b);
@@ -65,16 +65,24 @@ int main() {
          1, -1, 2;
 
     // Compute eigenvalues using QR algorithm
-    MatrixXd eigenvalues;
-    qr_algorithm(A, eigenvalues);
+    MatrixXd computed_eigenvalues;
+    qr_algorithm(A, computed_eigenvalues);
 
-    cout << "Eigenvalues:\n" << eigenvalues << endl;
+    cout << "Computed Eigenvalues:\n" << computed_eigenvalues << endl;
 
-    // Find eigenvector using inverse iteration for a specific eigenvalue
-    double target_eigenvalue = eigenvalues(0, 0); // Choose any eigenvalue
-    VectorXd eigenvector = inverse_iteration(A, target_eigenvalue);
+    // Check using Eigen's built-in methods
+    EigenSolver<MatrixXd> solver(A);
+    VectorXd eigenvalues = solver.eigenvalues().real();
+    MatrixXd eigenvectors = solver.eigenvectors().real();
 
-    cout << "Eigenvector:\n" << eigenvector << endl;
+    cout << "Eigenvalues using Eigen's solver:\n" << eigenvalues << endl;
+    cout << "Eigenvectors using Eigen's solver:\n" << eigenvectors << endl;
+
+    // Choose any eigenvalue for eigenvector computation
+    double target_eigenvalue = eigenvalues(0);
+    VectorXd computed_eigenvector = inverse_iteration(A, target_eigenvalue);
+
+    cout << "Computed Eigenvector:\n" << computed_eigenvector << endl;
 
     return 0;
 }

@@ -2,7 +2,7 @@
 #include <eigen3/Eigen/Dense>
 
 using namespace Eigen;
-typedef long double numType;
+typedef double numType;
 
 // Function to perform Gaussian elimination with partial pivoting
 VectorXd gaussElimination(const MatrixXd& A, const VectorXd& b, numType* det = nullptr, int* opCount = nullptr) {
@@ -173,6 +173,11 @@ VectorXd solveCholesky(const MatrixXd& A, const VectorXd& b, int* opCount=nullpt
 }
 
 
+numType cond(const MatrixXd& A) {
+    return A.norm() * A.inverse().norm();
+}
+
+
 int main() {
     // MatrixXd A(5, 5);
     // A << 97.826801,	 41.998414,	50.609343,	12.433798,	-34.924921,
@@ -204,30 +209,30 @@ int main() {
 
 
 
-    MatrixXd A(4, 4);
-    A << 4, 1, 0, 0,
-         2, 5, 3, 0,
-         0, 3, 6, 2,
-         0, 0, 1, 7;
+    // MatrixXd A(4, 4);
+    // A << 4, 1, 0, 0,
+    //      2, 5, 3, 0,
+    //      0, 3, 6, 2,
+    //      0, 0, 1, 7;
 
-    VectorXd b(4);
-    b << 11, 12, 13, 14;
+    // VectorXd b(4);
+    // b << 11, 12, 13, 14;
 
 
     
-    // MatrixXd A(5, 5);
-    // for (int i = 1; i <= A.rows(); ++i) {
-    //     for (int j = 1; j <= A.cols(); ++j) {
-    //         A(i - 1, j - 1) = 1.0 / (i + j - 1);
-    //     }
-    // }
-    // std::cout << "A:" << std::endl;
-    // std::cout << A << std::endl;
+    MatrixXd A(7, 7);
+    for (int i = 1; i <= A.rows(); ++i) {
+        for (int j = 1; j <= A.cols(); ++j) {
+            A(i - 1, j - 1) = 1.0 / (i + j - 1);
+        }
+    }
+    std::cout << "A:" << std::endl;
+    std::cout << A << std::endl;
 
-    // // x = (1, 1, 1, 1, 1)
-    // VectorXd b = A.rowwise().sum();
-    // std::cout << "b:" << std::endl;
-    // std::cout << b << std::endl;
+    // x = (1, 1, 1, 1, 1)
+    VectorXd b = A.rowwise().sum();
+    std::cout << "b:" << std::endl;
+    std::cout << b << std::endl;
 
 
 
@@ -272,6 +277,8 @@ int main() {
     } else {
         std::cout << "Solutions Cholesky and by Eigen are not equal.\n";
     }
+
+    std::cout << "Cond: " << cond(A) << std::endl;
 
     return 0;
 }

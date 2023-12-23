@@ -10,3 +10,6 @@ iteration:
 eigen:
 	g++ -o eigen eigen.cpp && ./eigen
 	rm eigen
+seidel:
+	g++ -o seidel seidel.cpp && ./seidel
+	rm seidel

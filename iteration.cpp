@@ -5,32 +5,6 @@
 using namespace Eigen;
 using namespace std;
 
-VectorXd solveGaussSeidel(const MatrixXd& A, const VectorXd& b, int maxIterations, double tolerance) {
-    int n = A.rows();
-    VectorXd x = VectorXd::Zero(n);
-
-    for (int k = 0; k < maxIterations; ++k) {
-        VectorXd x_new = x;
-
-        for (int i = 0; i < n; ++i) {
-            double sum = 0.0;
-            for (int j = 0; j < n; ++j) {
-                if (j != i) {
-                    sum += A(i, j) * x_new(j);
-                }
-            }
-            x(i) = (b(i) - sum) / A(i, i);
-        }
-
-        // Check for convergence
-        if ((x - x_new).norm() < tolerance) {
-            cout << "Converged in " << k + 1 << " iterations." << endl;
-            break;
-        }
-    }
-
-    return x;
-}
 
 struct IterativeResult {
     VectorXd solution;
@@ -97,15 +71,15 @@ int main() {
 
 
 
-    // MatrixXd A(4, 4);
-    // VectorXd b(4);
+    MatrixXd A(4, 4);
+    VectorXd b(4);
 
-    // A << 10, -1, 2, 0,
-    //      -1, 11, -1, 3,
-    //      2, -1, 10, -1,
-    //      0, 3, -1, 8;
+    A << 10, -1, 2, 0,
+         -1, 11, -1, 3,
+         2, -1, 10, -1,
+         0, 3, -1, 8;
 
-    // b << 6, 25, -11, 15;
+    b << 6, 25, -11, 15;
 
 
 
@@ -125,7 +99,6 @@ int main() {
 
 
     // Solve the system using custom Gauss-Seidel method
-    VectorXd zeidelSolution = solveGaussSeidel(A, b, 1000, 1e-6);
     IterativeResult result = solveSimpleIteration(A, b, 1000, 1e-6);
 
     // Print the results
@@ -138,7 +111,6 @@ int main() {
     VectorXd eigenSolution = A.lu().solve(b);
 
     // Print the solutions
-    cout << "Custom Gauss-Seidel Solution:\n" << zeidelSolution << endl;
     cout << "Eigen LU Solution:\n" << eigenSolution << endl;
 
     return 0;
